@@ -52,10 +52,26 @@ int main(int argc, char** argv)
             (int)FSMMode::FixStand
         )
     );
+    fsm->states.back()->registered_checks.emplace_back(
+        std::make_pair(
+            []()->bool{
+                return FSMState::keyboard && FSMState::keyboard->key() == "1";
+            },
+            (int)FSMMode::FixStand
+        )
+    );
     fsm->add(new State_FixStand(FSMMode::FixStand));
     fsm->states.back()->registered_checks.emplace_back(
         std::make_pair(
             [&]()->bool{ return joy.RB.pressed && joy.X.on_pressed; }, // R1 + X
+            FSMMode::Velocity
+        )
+    );
+    fsm->states.back()->registered_checks.emplace_back(
+        std::make_pair(
+            []()->bool{
+                return FSMState::keyboard && FSMState::keyboard->key() == "2";
+            },
             FSMMode::Velocity
         )
     );

@@ -651,7 +651,7 @@ THIRD_PARTY_R2_29DOF_CFG = UnitreeArticulationCfg(
             effort_limit_sim=R2_WB_EFFORT,
             stiffness=R2_WB_STIFFNESS,
             damping=R2_WB_DAMPING,
-            armature=0.01,
+            # armature=0.01,
         ),
     },
     joint_sdk_names=R2_WB_JOINT_NAMES.copy(),
