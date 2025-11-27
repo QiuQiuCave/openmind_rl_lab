@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Standalone runner for the Unitree R2 sim2sim velocity policy.
+"""Standalone runner for the Openmind_R2 sim2sim velocity policy.
 
 This script mirrors the configuration from ``test_vel_r2_his.py`` but keeps all
 runtime parameters in a single file so it can be copied into other projects.
@@ -31,8 +31,9 @@ except ImportError:  # pragma: no cover - optional dependency
 
 
 DEFAULT_CKPT_DIR = Path(
-    "/home/qiuziyu/code/unitree_rl_lab/logs/rsl_rl/unitree_r2_velocity"
-) / "2025-11-07_14-33-25"
+    "/home/qiuziyu/code/unitree_rl_lab/logs/rsl_rl/unitree_r2_velocity/2025-11-07_14-33-25"
+    # "/home/qiuziyu/code/unitree_rl_lab/logs/rsl_rl/openmind_r2_velocity/2025-11-17_09-24-46"
+) 
 
 DEFAULT_XML_PATH = Path(SIM2SIMLIB_ASSETS_DIR) / "third_party/r2_wholebody/mjcf/r2_wb.xml"
 
@@ -176,7 +177,7 @@ BASE_OBS_SCALES = {
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Run the Unitree R2 sim2sim policy with inline configuration.",
+        description="Run the Openmind_R2 sim2sim policy with inline configuration.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
@@ -195,7 +196,7 @@ def parse_args() -> argparse.Namespace:
         "--xml-path",
         type=Path,
         default=DEFAULT_XML_PATH,
-        help="Path to the MuJoCo XML describing the R2 robot.",
+        help="Path to the MuJoCo XML describing the Openmind_R2 robot.",
     )
     parser.add_argument(
         "--env-yaml",
@@ -345,7 +346,7 @@ def build_sim2sim_config(
     )
     cmd = _resolve_cmd(args.cmd)
     return Sim2Sim_Config(
-        robot_name="r2_wholebody",
+        robot_name="openmind_r2_wholebody",
         simulation_dt=env_params["simulation_dt"],
         control_decimation=env_params["control_decimation"],
         slowdown_factor=args.slowdown,
@@ -379,4 +380,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
