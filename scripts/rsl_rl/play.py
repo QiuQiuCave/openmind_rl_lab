@@ -56,11 +56,16 @@ from isaaclab.envs import DirectMARLEnv, multi_agent_to_single_agent
 from isaaclab.utils.assets import retrieve_file_path
 from isaaclab.utils.dict import print_dict
 from isaaclab.utils.pretrained_checkpoint import get_published_pretrained_checkpoint
-from isaaclab_rl.rsl_rl import RslRlOnPolicyRunnerCfg, RslRlVecEnvWrapper, export_policy_as_jit, export_policy_as_onnx
+from isaaclab_rl.rsl_rl import RslRlOnPolicyRunnerCfg, RslRlVecEnvWrapper, export_policy_as_jit
 from isaaclab_tasks.utils import get_checkpoint_path
 
 import unitree_rl_lab.tasks  # noqa: F401
 from unitree_rl_lab.utils.parser_cfg import parse_env_cfg
+from unitree_rl_lab.utils.r2_loco_onnx_exporter import (
+    _collect_metadata,
+    attach_r2_locomotion_metadata,
+    export_r2_locomotion_policy_as_onnx,
+)
 
 
 def main():
@@ -133,8 +138,25 @@ def main():
     # export policy to onnx/jit
     export_model_dir = os.path.join(os.path.dirname(resume_path), "exported")
     export_policy_as_jit(policy_nn, ppo_runner.obs_normalizer, path=export_model_dir, filename="policy.pt")
-    export_policy_as_onnx(
-        policy_nn, normalizer=ppo_runner.obs_normalizer, path=export_model_dir, filename="policy.onnx"
+
+    r2_export_dir = os.path.join(os.path.dirname(resume_path), "exported_onnx")
+    export_r2_locomotion_policy_as_onnx(
+        env=env.unwrapped,
+        actor_critic=policy_nn,
+        path=r2_export_dir,
+        filename="policy.onnx",
+        normalizer=ppo_runner.obs_normalizer,
+        verbose=False,
+        obs_full=True,
+    )
+    metadata = _collect_metadata(env.unwrapped, log_dir)
+    print("[INFO] R2 ONNX metadata:")
+    print_dict(metadata, nesting=4)
+    attach_r2_locomotion_metadata(
+        env=env.unwrapped,
+        run_path=log_dir,
+        path=r2_export_dir,
+        filename="policy.onnx",
     )
     print(f"[INFO] Joint orders: {env.unwrapped.scene['robot'].joint_names}")
     dt = env.unwrapped.step_dt

@@ -74,3 +74,5 @@ datasets
 # Models directory
 /unitree_model/
 /r2.py
+/refer/
+/.cursor/
