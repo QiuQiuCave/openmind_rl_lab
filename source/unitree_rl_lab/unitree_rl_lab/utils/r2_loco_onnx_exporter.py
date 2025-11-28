@@ -20,7 +20,7 @@ def export_r2_locomotion_policy_as_onnx(
     filename: str = "policy.onnx",
     normalizer: torch.nn.Module | None = None,
     verbose: bool = False,
-    obs_full: bool = False,
+    obs_full: bool = True,
 ) -> None:
     """Export a locomotion policy (trained on R2) to ONNX format.
 
