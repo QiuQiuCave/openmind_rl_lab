@@ -229,6 +229,27 @@ class ObservationsCfg:
 
 
 @configclass
+class ObservationsNoHistoryCfg(ObservationsCfg):
+    """Observation configuration without stacking historical frames."""
+
+    @configclass
+    class PolicyCfg(ObservationsCfg.PolicyCfg):
+        def __post_init__(self):
+            super().__post_init__()
+            self.history_length = 1
+
+    policy: PolicyCfg = PolicyCfg()
+
+    @configclass
+    class CriticCfg(ObservationsCfg.CriticCfg):
+        def __post_init__(self):
+            super().__post_init__()
+            self.history_length = 1
+
+    critic: CriticCfg = CriticCfg()
+
+
+@configclass
 class RewardsCfg:
     """Reward terms for the MDP."""
 
@@ -389,6 +410,23 @@ class RobotEnvCfg(ManagerBasedRLEnvCfg):
 
 @configclass
 class RobotPlayEnvCfg(RobotEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 32
+        self.scene.terrain.terrain_generator.num_rows = 2
+        self.scene.terrain.terrain_generator.num_cols = 10
+        self.commands.base_velocity.ranges = self.commands.base_velocity.limit_ranges
+
+
+@configclass
+class RobotEnvNoHistoryCfg(RobotEnvCfg):
+    """Environment configuration without historical observations."""
+
+    observations: ObservationsNoHistoryCfg = ObservationsNoHistoryCfg()
+
+
+@configclass
+class RobotPlayEnvNoHistoryCfg(RobotEnvNoHistoryCfg):
     def __post_init__(self):
         super().__post_init__()
         self.scene.num_envs = 32
