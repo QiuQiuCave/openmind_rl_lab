@@ -26,7 +26,9 @@ class UnitreeArticulationCfg(ArticulationCfg):
 
 
 # UNITREE_MODEL_DIR = "/home/qiuziyu/code/unitree_rl_lab/unitree_model"
-UNITREE_MODEL_DIR = "/home/qiuziyu/code/assetslib/third_party"
+# UNITREE_MODEL_DIR = "/home/qiuziyu/code/assetslib/third_party"
+UNITREE_MODEL_DIR = "/root/qzy_workspace/assetslib/third_party"
+
 
 UNITREE_GO2_CFG = UnitreeArticulationCfg(
     spawn=sim_utils.UsdFileCfg(

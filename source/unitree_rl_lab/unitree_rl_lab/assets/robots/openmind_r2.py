@@ -15,7 +15,8 @@ from isaaclab.assets.articulation import ArticulationCfg
 from unitree_rl_lab.assets.robots.unitree import UnitreeArticulationCfg
 
 
-OPENMIND_MODEL_DIR = "/home/qiuziyu/code/assetslib/third_party"
+# OPENMIND_MODEL_DIR = "/home/qiuziyu/code/assetslib/third_party"
+OPENMIND_MODEL_DIR = "/root/qzy_workspace/assetslib/third_party"
 
 OPENMIND_R2_JOINT_NAMES = [
     "left_hip_pitch_joint",
