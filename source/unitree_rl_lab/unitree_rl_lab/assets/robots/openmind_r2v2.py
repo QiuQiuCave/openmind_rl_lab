@@ -6,7 +6,7 @@
 """Configuration for Openmind R2V2 robot.
 
 This is a third-party humanoid robot configuration based on the R2V2 model
-(with hands and shell).
+(with hand fixed).
 """
 
 import isaaclab.sim as sim_utils
@@ -19,8 +19,8 @@ from unitree_rl_lab.assets.robots.unitree import UnitreeArticulationCfg
 OPENMIND_MODEL_DIR = "/root/qzy_workspace/assetslib/third_party"
 
 # All revolute joints in the USD (must match asset.data.joint_names exactly for export_deploy_cfg).
-# Fingers and head are included here so the deploy config export passes;
-# the locomotion policy controls all 52 dims but fingers/head stay near their default (zero) pose.
+# In the "hand_fixed" variant, upper-body joints (arms, hands, fingers, head) are fixed;
+# only the 14 leg + waist revolute joints remain.
 OPENMIND_R2V2_JOINT_NAMES = [
     # 12 leg joints
     "left_hip_pitch_joint",
@@ -38,49 +38,6 @@ OPENMIND_R2V2_JOINT_NAMES = [
     # 2 waist joints
     "waist_yaw_joint",
     "waist_pitch_joint",
-    # 7 left arm/wrist joints
-    "left_shoulder_pitch_joint",
-    "left_shoulder_roll_joint",
-    "left_shoulder_yaw_joint",
-    "left_arm_pitch_joint",
-    "left_arm_yaw_joint",
-    "left_hand_pitch_joint",
-    "left_hand_roll_joint",
-    # 11 left finger joints
-    "left_thumb_metacarpal_joint",
-    "left_thumb_proximal_joint",
-    "left_thumb_distal_joint",
-    "left_index_proximal_joint",
-    "left_index_distal_joint",
-    "left_middle_proximal_joint",
-    "left_middle_distal_joint",
-    "left_ring_proximal_joint",
-    "left_ring_distal_joint",
-    "left_pinky_proximal_joint",
-    "left_pinky_distal_joint",
-    # 7 right arm/wrist joints
-    "right_shoulder_pitch_joint",
-    "right_shoulder_roll_joint",
-    "right_shoulder_yaw_joint",
-    "right_arm_pitch_joint",
-    "right_arm_yaw_joint",
-    "right_hand_pitch_joint",
-    "right_hand_roll_joint",
-    # 11 right finger joints
-    "right_thumb_metacarpal_joint",
-    "right_thumb_proximal_joint",
-    "right_thumb_distal_joint",
-    "right_index_proximal_joint",
-    "right_index_distal_joint",
-    "right_middle_proximal_joint",
-    "right_middle_distal_joint",
-    "right_ring_proximal_joint",
-    "right_ring_distal_joint",
-    "right_pinky_proximal_joint",
-    "right_pinky_distal_joint",
-    # 2 head joints
-    "head_yaw_joint",
-    "head_pitch_joint",
 ]
 
 OPENMIND_R2V2_INIT_JOINT_POS = {
@@ -109,46 +66,6 @@ OPENMIND_R2V2_STIFFNESS = {
     "right_ankle_roll_joint": 30.0,
     "waist_yaw_joint": 300.0,
     "waist_pitch_joint": 300.0,
-    "left_shoulder_pitch_joint": 100.0,
-    "left_shoulder_roll_joint": 100.0,
-    "left_shoulder_yaw_joint": 50.0,
-    "left_arm_pitch_joint": 50.0,
-    "left_arm_yaw_joint": 50.0,
-    "left_hand_pitch_joint": 50.0,
-    "left_hand_roll_joint": 50.0,
-    "right_shoulder_pitch_joint": 100.0,
-    "right_shoulder_roll_joint": 100.0,
-    "right_shoulder_yaw_joint": 50.0,
-    "right_arm_pitch_joint": 50.0,
-    "right_arm_yaw_joint": 50.0,
-    "right_hand_pitch_joint": 50.0,
-    "right_hand_roll_joint": 50.0,
-    # fingers
-    "left_thumb_metacarpal_joint": 10.0,
-    "left_thumb_proximal_joint": 10.0,
-    "left_thumb_distal_joint": 10.0,
-    "left_index_proximal_joint": 10.0,
-    "left_index_distal_joint": 10.0,
-    "left_middle_proximal_joint": 10.0,
-    "left_middle_distal_joint": 10.0,
-    "left_ring_proximal_joint": 10.0,
-    "left_ring_distal_joint": 10.0,
-    "left_pinky_proximal_joint": 10.0,
-    "left_pinky_distal_joint": 10.0,
-    "right_thumb_metacarpal_joint": 10.0,
-    "right_thumb_proximal_joint": 10.0,
-    "right_thumb_distal_joint": 10.0,
-    "right_index_proximal_joint": 10.0,
-    "right_index_distal_joint": 10.0,
-    "right_middle_proximal_joint": 10.0,
-    "right_middle_distal_joint": 10.0,
-    "right_ring_proximal_joint": 10.0,
-    "right_ring_distal_joint": 10.0,
-    "right_pinky_proximal_joint": 10.0,
-    "right_pinky_distal_joint": 10.0,
-    # head
-    "head_yaw_joint": 30.0,
-    "head_pitch_joint": 30.0,
 }
 
 OPENMIND_R2V2_DAMPING = {
@@ -166,46 +83,6 @@ OPENMIND_R2V2_DAMPING = {
     "right_ankle_roll_joint": 3.0,
     "waist_yaw_joint": 3.0,
     "waist_pitch_joint": 3.0,
-    "left_shoulder_pitch_joint": 2.0,
-    "left_shoulder_roll_joint": 2.0,
-    "left_shoulder_yaw_joint": 2.0,
-    "left_arm_pitch_joint": 2.0,
-    "left_arm_yaw_joint": 2.0,
-    "left_hand_pitch_joint": 2.0,
-    "left_hand_roll_joint": 2.0,
-    "right_shoulder_pitch_joint": 2.0,
-    "right_shoulder_roll_joint": 2.0,
-    "right_shoulder_yaw_joint": 2.0,
-    "right_arm_pitch_joint": 2.0,
-    "right_arm_yaw_joint": 2.0,
-    "right_hand_pitch_joint": 2.0,
-    "right_hand_roll_joint": 2.0,
-    # fingers
-    "left_thumb_metacarpal_joint": 0.2,
-    "left_thumb_proximal_joint": 0.2,
-    "left_thumb_distal_joint": 0.2,
-    "left_index_proximal_joint": 0.2,
-    "left_index_distal_joint": 0.2,
-    "left_middle_proximal_joint": 0.2,
-    "left_middle_distal_joint": 0.2,
-    "left_ring_proximal_joint": 0.2,
-    "left_ring_distal_joint": 0.2,
-    "left_pinky_proximal_joint": 0.2,
-    "left_pinky_distal_joint": 0.2,
-    "right_thumb_metacarpal_joint": 0.2,
-    "right_thumb_proximal_joint": 0.2,
-    "right_thumb_distal_joint": 0.2,
-    "right_index_proximal_joint": 0.2,
-    "right_index_distal_joint": 0.2,
-    "right_middle_proximal_joint": 0.2,
-    "right_middle_distal_joint": 0.2,
-    "right_ring_proximal_joint": 0.2,
-    "right_ring_distal_joint": 0.2,
-    "right_pinky_proximal_joint": 0.2,
-    "right_pinky_distal_joint": 0.2,
-    # head
-    "head_yaw_joint": 1.0,
-    "head_pitch_joint": 1.0,
 }
 
 OPENMIND_R2V2_EFFORT = {
@@ -223,46 +100,6 @@ OPENMIND_R2V2_EFFORT = {
     "right_ankle_roll_joint": 75.0,
     "waist_yaw_joint": 130.0,
     "waist_pitch_joint": 130.0,
-    "left_shoulder_pitch_joint": 75.0,
-    "left_shoulder_roll_joint": 75.0,
-    "left_shoulder_yaw_joint": 75.0,
-    "left_arm_pitch_joint": 36.0,
-    "left_arm_yaw_joint": 36.0,
-    "left_hand_pitch_joint": 36.0,
-    "left_hand_roll_joint": 36.0,
-    "right_shoulder_pitch_joint": 75.0,
-    "right_shoulder_roll_joint": 75.0,
-    "right_shoulder_yaw_joint": 75.0,
-    "right_arm_pitch_joint": 36.0,
-    "right_arm_yaw_joint": 36.0,
-    "right_hand_pitch_joint": 36.0,
-    "right_hand_roll_joint": 36.0,
-    # fingers
-    "left_thumb_metacarpal_joint": 0.5,
-    "left_thumb_proximal_joint": 1.1,
-    "left_thumb_distal_joint": 1.1,
-    "left_index_proximal_joint": 2.0,
-    "left_index_distal_joint": 2.0,
-    "left_middle_proximal_joint": 2.0,
-    "left_middle_distal_joint": 2.0,
-    "left_ring_proximal_joint": 2.0,
-    "left_ring_distal_joint": 2.0,
-    "left_pinky_proximal_joint": 2.0,
-    "left_pinky_distal_joint": 2.0,
-    "right_thumb_metacarpal_joint": 0.5,
-    "right_thumb_proximal_joint": 1.1,
-    "right_thumb_distal_joint": 1.1,
-    "right_index_proximal_joint": 2.0,
-    "right_index_distal_joint": 2.0,
-    "right_middle_proximal_joint": 2.0,
-    "right_middle_distal_joint": 2.0,
-    "right_ring_proximal_joint": 2.0,
-    "right_ring_distal_joint": 2.0,
-    "right_pinky_proximal_joint": 2.0,
-    "right_pinky_distal_joint": 2.0,
-    # head
-    "head_yaw_joint": 12.0,
-    "head_pitch_joint": 12.0,
 }
 
 ##
@@ -271,7 +108,7 @@ OPENMIND_R2V2_EFFORT = {
 
 OPENMIND_R2V2_CFG = UnitreeArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
-        usd_path=f"{OPENMIND_MODEL_DIR}/r2_v2_with_hand/usd/r2v2_with_shell_with_hand.usd",
+        usd_path=f"{OPENMIND_MODEL_DIR}/r2_v2_with_hand_fixed/usd/r2_v2_with_hand_fixed.usd",
         activate_contact_sensors=True,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=False,
@@ -307,4 +144,4 @@ OPENMIND_R2V2_CFG = UnitreeArticulationCfg(
     joint_sdk_names=OPENMIND_R2V2_JOINT_NAMES.copy(),
 )
 
-"""Configuration for the Openmind R2V2 Humanoid robot (with hands and shell)."""
+"""Configuration for the Openmind R2V2 Humanoid robot (with hand fixed)."""
