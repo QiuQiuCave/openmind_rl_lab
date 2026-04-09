@@ -275,7 +275,7 @@ class RewardsCfg:
 
     # -- robot
     flat_orientation_l2 = RewTerm(func=mdp.flat_orientation_l2, weight=-5.0)
-    base_height = RewTerm(func=mdp.base_height_l2, weight=-10.0, params={"target_height": 0.68})
+    base_height = RewTerm(func=mdp.base_height_l2, weight=-10.0, params={"target_height": 0.7766})
 
     # -- feet
     gait = RewTerm(
@@ -378,6 +378,48 @@ class RobotEnvCfg(ManagerBasedRLEnvCfg):
 
 @configclass
 class RobotPlayEnvCfg(RobotEnvCfg):
+    def __post_init__(self):
+        super().__post_init__()
+        self.scene.num_envs = 32
+        self.scene.terrain.terrain_generator.num_rows = 2
+        self.scene.terrain.terrain_generator.num_cols = 10
+        self.commands.base_velocity.ranges = self.commands.base_velocity.limit_ranges
+
+
+# ---------------------------------------------------------------------------
+# No-history variants (history_length = 1)
+# ---------------------------------------------------------------------------
+
+
+@configclass
+class ObservationsNoHistoryCfg(ObservationsCfg):
+    """Observation config without history stacking."""
+
+    @configclass
+    class PolicyCfg(ObservationsCfg.PolicyCfg):
+        def __post_init__(self):
+            super().__post_init__()
+            self.history_length = 1
+
+    @configclass
+    class CriticCfg(ObservationsCfg.CriticCfg):
+        def __post_init__(self):
+            super().__post_init__()
+            self.history_length = 1
+
+    policy: PolicyCfg = PolicyCfg()
+    critic: CriticCfg = CriticCfg()
+
+
+@configclass
+class RobotNoHistoryEnvCfg(RobotEnvCfg):
+    """Locomotion velocity-tracking env without observation history."""
+
+    observations: ObservationsNoHistoryCfg = ObservationsNoHistoryCfg()
+
+
+@configclass
+class RobotNoHistoryPlayEnvCfg(RobotNoHistoryEnvCfg):
     def __post_init__(self):
         super().__post_init__()
         self.scene.num_envs = 32
